@@ -1,0 +1,94 @@
+<html>
+    <head>
+	<title>WebAR</title>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<!-- <script src="http://www.hivemq.com/demos/websocket-client/js/mqttws31.js" type="text/javascript"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8">
+	 
+	 /* var mqtt_host = "broker.hivemq.com"*/
+	 /* var mqtt_host = "broker.mqttdashboard.com"*/
+	 /* var mqtt_host = "test.mosquitto.org"*/
+	 /* var mqtt_host = "echo.websocket.org"*/
+	 /* var mqtt_host = "iot.eclipse.org"*/
+	 /* var mqtt_host = '0.0.0.0'*/
+	 var mqtt_host = "10.101.100.218"
+	 var mqtt_port = 9001
+	 var mqtt_clientid = "myclientid_" + parseInt(Math.random() * 100, 10)
+	 var mqtt_topic = {{ topic|safe }}
+	 var mqtt_qos = 0
+	 
+	 /* var client = new Messaging.Client(mqtt_host, mqtt_port, mqtt_clientid);*/
+	 var client = new Paho.MQTT.Client(mqtt_host, mqtt_port, mqtt_clientid);
+	 
+	 var onConnect = function() {
+	     console.log("Connected to " + mqtt_host);
+	     document.getElementById('status').innerHTML = "Connected"
+	     subscribe(mqtt_topic, mqtt_qos);
+	 };
+	 var onFail = function(message) {
+	     console.log("Connection failed: " + message.errorMessage);
+	     document.getElementById('status').innerHTML = message.errorMessage + ", reconnecting"
+	     
+	     setTimeout(function() {
+		 console.log("Connection failed: Reconnecting");
+		 client.connect(options);
+	     }, 4000);
+	     
+	 };
+	 var subscribe = function(topic, qosNr) {
+	     client.subscribe(topic, {qos: qosNr});
+	     console.log("Subscribed: " + topic + ", qos: " + qosNr)
+	     document.getElementById('subscription').innerHTML = topic;
+	 };
+	 var onMessageArrived = function(message) {
+	     raw = message.payloadString;
+	     var jsonMessage = JSON.parse(raw);
+	     /* console.log(jsonMessage)*/
+
+	     var HTMLword = ""
+	     for (var field in jsonMessage) {
+		 HTMLword += "<li>" + field + ": " + jsonMessage[field] + "</li>"
+	     }
+
+	     document.getElementById('data_space').innerHTML = HTMLword;
+	 };
+	 var disconnect = function(message) {
+	     client.disconnect();
+	     document.getElementById('status').innerHTML = "Disconnected"
+	 }
+	 
+	 var options = {
+	     timeout: 3,
+	     cleanSession: true,
+	     onSuccess: onConnect,
+	     onFailure: onFail
+	 }
+
+	 /* setTimeout(function() {
+	    disconnect();
+	    }, 1000*60*5);*/
+	 
+	 client.onMessageArrived = onMessageArrived;
+	 client.connect(options);
+	</script>
+	
+    </head>
+    <body>
+	<div class="main">
+	    <div class="left_panel">
+		<ul>
+		    <li>MQTT Status: <span id="status">Not Connected</span></li>
+		    <li>Subscription: <span id="subscription">None</span></li>
+		</ul>
+	    </div>
+	    <div class="right_panel">
+		<ul id="data_space">
+		</ul>
+	    </div>
+	    <img src="/static/Logowhite_pioneerm.png">
+	</div>
+    </body>
+</html>
+
+	    

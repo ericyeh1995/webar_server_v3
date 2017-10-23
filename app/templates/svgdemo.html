@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>SVG demo 1</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <script>
+     var x = 245;
+     var curLen = 234;
+     var spark = 2;
+     var updateInt = 800;
+     setInterval(function() {
+
+	 x = x + (250-x)*0.1 + (Math.random()-0.5)*4;
+	 
+	 if (curLen+(x/60) > 10000) {
+	     curLen = 0;
+	     spark = 0;
+	 } else {
+	     curLen += x / (60000/updateInt);
+	 }
+
+	 if (Math.random() < (updateInt/10000)) {
+	     spark += 1;
+	 }
+	 
+	 document.getElementById("speed").innerHTML = x.toFixed(0).toString();
+	 document.getElementById("curLen").innerHTML = curLen.toFixed(0).toString();
+	 document.getElementById("spark").innerHTML = spark.toString();
+	 
+	 
+     }, updateInt);
+     
+    </script>
+    
+  </head>
+  
+  <body>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1028 720"><defs><style>.cls-1{fill:#000000;}.cls-2{font-size:25.3px;}.cls-10,.cls-2,.cls-3,.cls-4,.cls-6,.cls-9{fill:#fff;}.cls-10,.cls-2,.cls-3,.cls-6,.cls-9{font-family:ArialMT, Arial;}.cls-3{font-size:50.59px;}.cls-5,.cls-8{fill:none;stroke:#fff;stroke-miterlimit:10;}.cls-5{stroke-width:3px;}.cls-6{font-size:13.47px;}.cls-7{letter-spacing:-0.07em;}.cls-9{font-size:28px;}.cls-10{font-size:20.81px;}</style></defs><title>SVG</title><g id="background"><rect class="cls-1" width="1028" height="720"/></g><g id="data"><text class="cls-2" transform="translate(949 78)">times</text><text class="cls-3" transform="translate(876.56 77.57)" id="spark"> </text><g id="spark_icon"><path class="cls-4" d="M840.79,35.6A21.75,21.75,0,1,1,819,57.35,21.77,21.77,0,0,1,840.79,35.6m0-1a22.75,22.75,0,1,0,22.75,22.75A22.75,22.75,0,0,0,840.79,34.6Z"/><path class="cls-4" d="M848,39.44c-.14.23-.27.47-.41.7l-5.31,8.19a2.2,2.2,0,0,0-.32.55c-.16.58.23.65.66.64l4.69,0a4,4,0,0,1,.89.07c.54.12.69.47.42,1a2.83,2.83,0,0,1-.47.6L835.44,63.83a.65.65,0,0,1-.4.2c.14-.23.27-.46.42-.68l5-7.76c.12-.18.24-.36.34-.55.45-.85.14-1.46-.82-1.5-1.11,0-2.23,0-3.34,0a9.67,9.67,0,0,1-1.53-.1c-.55-.09-.7-.47-.4-.95a4.06,4.06,0,0,1,.58-.68L847.19,40c.22-.22.47-.43.71-.64Z"/><polyline class="cls-5" points="820.89 65.43 833.22 65.43 835.38 67.6 838.17 65.43 859.28 65.43"/></g><text class="cls-6" transform="translate(818.46 24.12)">S<tspan class="cls-7" x="8.99" y="0">P</tspan><tspan x="16.97" y="0">ARK</tspan></text><line id="line" class="cls-8" x1="797" y1="36.5" x2="797" y2="80"/><text class="cls-2" transform="translate(716.25 77.57)">mpm</text><text class="cls-9" transform="translate(666.77 77.37)">500</text><line id="slash" class="cls-8" x1="666" y1="54" x2="643" y2="77"/><text class="cls-3" transform="translate(542.4 77.57)" id="speed"> </text><g id="speed_icon"><path class="cls-4" d="M491.69,65.84a2.25,2.25,0,0,0,0-4.51l-10.21-7.51,8,9.9A2.26,2.26,0,0,0,491.69,65.84Z"/><path class="cls-4" d="M510.23,45a27.59,27.59,0,0,0-43.64,32.88h5.16l3.77-2.18-1.67-2.88L469,75.57a24.26,24.26,0,0,1-2.68-11.11c0-.71,0-1.41.09-2.1l5.78,1,.58-3.28-5.85-1a24.4,24.4,0,0,1,6.66-12l4,4.72,2.55-2.14-4-4.76a24.27,24.27,0,0,1,13-4.82v6.32h3.33V40.11a24.27,24.27,0,0,1,13,4.82l-4,4.76,2.55,2.14,4-4.72a24.4,24.4,0,0,1,6.66,12l-5.85,1,.58,3.28,5.78-1c.06.69.09,1.39.09,2.1a24.25,24.25,0,0,1-2.68,11.11l-4.85-2.8-1.67,2.88,3.77,2.18h5.16A27.61,27.61,0,0,0,510.23,45Z"/></g><text class="cls-6" transform="translate(467.12 24.12)">SPEED</text><text class="cls-2" transform="translate(298.4 77.45)">m</text><text class="cls-3" transform="translate(138.56 77.57)" id="curLen"> </text><text class="cls-10" transform="translate(61 51.81)">Current<tspan x="5.74" y="24.97">Length</tspan></text></g></g></svg
+  </body>
+</html>

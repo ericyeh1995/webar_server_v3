@@ -1,0 +1,28 @@
+<html>
+    <head>
+	<title>Animation</title>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<script>
+	</script>
+    </head>
+    <body>
+	<h1>Video Test: 3D effect</h1>
+	<h2>HTML5 video test</h2>
+
+	<p>200x128</p>
+	<video id="smallVideo" width="200" height="128" autoplay loop>
+	  <source src="static/renderings/machine1_128p4s.m4v" type="video/mp4" />
+	  Your browser does not support the video tag.
+	</video>
+
+	<br>
+	<p>800x540</p>
+	<video id="largeVideo" width="800" height="540" autoplay loop>
+	  <source src="static/renderings/machine1_540p5s.m4v" type="video/mp4" />
+	  Your browser does not support the video tag.
+	</video>
+
+    </body>
+</html>
+
+

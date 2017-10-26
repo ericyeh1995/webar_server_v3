@@ -6,7 +6,7 @@
     
     <body>
 
-	<svg width="1028" height="720">
+	<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1028 720">
 	    <defs>
 		<style>
 		 .cls-1{font-size:25.3px;}
@@ -52,8 +52,9 @@
 		<!--     <circle class="cls-20" cx="116.94" cy="595.85" r="0.5"/>長度表圓心 -->
 
 		<!-- video -->
-		<foreignObject x="825" y="560" width="0" height="0">
-		    <video width="182" height="144" autoplay loop>
+		<!-- <foreignObject x="825" y="560" width="0" height="0"> -->
+		<foreignObject>
+		    <video autoplay loop style="position:fixed; left:800; top:530;">
 			<source src="static/renderings/machine1_172p6s.m4v" type="video/mp4" />
 		    </video>
 		</foreignObject>
@@ -66,6 +67,10 @@
 	<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 	<script src="{{ url_for('static', filename='d3.min.js') }}"></script>
 	<script>
+	 /* var num = 5.1234
+	    alert("test toFixed: " + ("00" + num.toFixed()).slice(-2));*/
+
+	 
 	 var TAU = 2 * Math.PI;
 
 	 
@@ -76,7 +81,6 @@
 	 var speedX = 1;
 	 var tarLen = 260;
 	 var defaultStartLen = 200;
-
 	 
 	 var curSpeed = 250;
 	 var maxSpeed = 500;
@@ -88,8 +92,9 @@
 
 	 
 	 function updateState() {
+
 	     curSpeed += 5;
-	      curLen += speedX * curSpeed / 60;
+	     curLen += speedX * curSpeed / 60;
 	     curSpeed >= 300 ? curSpeed = 200 :0;
 	     curLen >= tarLen ? (curLen = defaultStartLen, spark = 0) :0;
 	     curLen >= tarLen ? spark = 0 :0;
@@ -100,9 +105,11 @@
 	     var secLeft = totSecLeft % 60;
 	     var minLeft = totSecLeft/60 % 60;
 	     var hrLeft = totSecLeft/3600;
-	     timeLeft = hrLeft.toFixed().padStart(2,0) + ':' +
-			minLeft.toFixed().padStart(2,0) + ':' +
-			secLeft.toFixed().padStart(2,0)
+
+	     
+	     timeLeft = ("00" + hrLeft.toFixed()).slice(-2) + ':' +
+			 ("00" + minLeft.toFixed()).slice(-2) + ':' +
+			 ("00" + secLeft.toFixed()).slice(-2)
 	 }
 
 	 
@@ -145,9 +152,12 @@
 		 };
 	     };
 	 }
-	 
+
+
+
 	 setInterval(function() {
 	     updateState();
+
 	     progBar.transition()
 		    .duration(1000)
 		    .attrTween("d", arcTween(curLen/tarLen * TAU));
@@ -156,8 +166,8 @@
 		     .attrTween("transform", angTween(curSpeed/maxSpeed));
 	     
 	     document.getElementById("speed").innerHTML = curSpeed.toFixed();
-	     document.getElementById("tarLen").innerHTML = tarLen.toFixed().padStart(6, 0);
-	     document.getElementById("curLen").innerHTML = curLen.toFixed().padStart(6, 0);
+	     document.getElementById("tarLen").innerHTML = ("000000" + tarLen.toFixed()).slice(6);
+	     document.getElementById("curLen").innerHTML = ("000000" + curLen.toFixed()).slice(6);
 	     document.getElementById("timeLeft").innerHTML = timeLeft;
 	     document.getElementById("spark").innerHTML = spark.toString();
 	 }, updateInt);

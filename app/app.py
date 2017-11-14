@@ -22,6 +22,14 @@ def svgDemo():
 def svgDemo2():
     return render_template('svgdemo2.html')
 
+#<!-- add with Terrence-->
+@app.route('/svgdemo3')
+def svgDemo3():
+    return render_template('svgdemo3.html')
+@app.route('/svgdemo4')
+def svgDemo4():
+    return render_template('svgdemo4.html')
+
 @app.route('/videodemo')
 def videoDemo():
     return render_template('videodemo.html')
